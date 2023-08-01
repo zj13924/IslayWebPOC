@@ -1,15 +1,17 @@
 import { RectF } from "./classes.js";
 import { PointF } from "./classes.js";
 
-function getParamT(x0, y0, x1, y1, x2, y2, x3, y3, x, y, threshold) {
+export function getParamT(x0, y0, x1, y1, x2, y2, x3, y3, x, y, threshold) {
     var paras = distanceToCurve(x0, y0, x1, y1, x2, y2, x3, y3, x, y);
     var distance = paras[0];
     var t = paras[1];
     return (distance <= threshold && t > 0.02 && t < 0.98 ? t : -1);
 }
 
-function distanceToCurve(x0_, y0_, x1_, y1_, x2_, y2_, x3_, y3_, x0, y0) {
+export function distanceToCurve(x0_, y0_, x1_, y1_, x2_, y2_, x3_, y3_, x0, y0) {
     var pointList = getDivPointList(x0_, y0_, x1_, y1_, x2_, y2_, x3_, y3_, 12);
+    // console.log(x0 + ", " + y0);
+    // console.log(pointList);
     var rf = new RectF();
     var minDistance = 10000000;
     var minIndex = 0;
@@ -28,7 +30,7 @@ function distanceToCurve(x0_, y0_, x1_, y1_, x2_, y2_, x3_, y3_, x0, y0) {
         var x3 = -(dx * dy * y1 - dx * dy * y0 - dy * dy * x1 - dx * dx * x0) / (dy * dy + dx * dx);
         var y3 = (dx * dx * y1 + dy * dy * y0 - dx * dy * x1 + dx * dy * x0) / (dy * dy + dx * dx);
         rf.set(Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2) + 1, Math.max(y1, y2) + 1);
-        if (rf.contains(x3, y3)) {
+        if (rf.containsP(x3, y3)) {
             distance = getDistance(x0, y0, x3, y3);
             xq_ = x3;
             yq_ = y3;
@@ -57,7 +59,7 @@ function distanceToCurve(x0_, y0_, x1_, y1_, x2_, y2_, x3_, y3_, x0, y0) {
     return new Array(getDistance(x0, y0, xq, yq), t);
 }
 
-function getDivPointList(x0, y0, x1, y1, x2, y2, x3, y3, divs) {
+export function getDivPointList(x0, y0, x1, y1, x2, y2, x3, y3, divs) {
     var pointList = new Array(divs + 1);
     for (var i = 0; i < divs; i++) {
         var t = 1 / divs * i;
@@ -79,10 +81,10 @@ function getDivPointList(x0, y0, x1, y1, x2, y2, x3, y3, divs) {
     return pointList;
 }
 
-function getDistance(x0, y0, x1, y1) {
+export function getDistance(x0, y0, x1, y1) {
     return Math.sqrt(Math.pow(x0 - x1, 2) + Math.pow(y0 - y1, 2));
 }
 
-function divide(a, b, t) {
+export function divide(a, b, t) {
     return a + (b - a) * t;
 }

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>D3 Svg Drag & Drop</title>
+	<script src="js/d3.v5.min.js"></script>
+	<script src="js/classes.js" type="module"></script>
+	<script src="js/bezier.js" type="module"></script>
+	<script src="js/main.js"></script>
+	<style>
+		.svg-container {
+			border: 3px solid #888;
+			display: inline-block;
+		}
+	</style>
+</head>
+
+<body>
+	<h2>IslayWeb POC</h2>
+	<h3>(Works on browsers with ECMAScript 6 compatibility)</h3>
+
+	<div class="svg-container">
+		<svg id="diagram-container" xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+			<defs>
+				<marker style="overflow: visible" id="ConcaveTriangle" refX="0" refY="0" orient="auto-start-reverse"
+					inkscape:stockid="Concave triangle arrow" markerWidth="1" markerHeight="1" viewBox="0 0 1 1"
+					inkscape:isstock="true" inkscape:collect="always" preserveAspectRatio="xMidYMid">
+					<path transform="scale(0.7)" d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+						style="fill: context-stroke; fill-rule: evenodd; stroke: none" id="path7" />
+				</marker>
+				<g id="state-grp">
+					<ellipse style="
+								fill: #bfbfbf;
+								fill-opacity: 1;
+								stroke: #000000;
+								stroke-width: 0.855274;
+								stroke-dasharray: none;
+								stroke-opacity: 1;
+							" id="path1" cx="58.236969" cy="49.694916" rx="52.489029" ry="40.277489" />
+					<image width="52.102562" height="50.067307" preserveAspectRatio="none"
+						xlink:href="img/char_default_128.png" id="image1" x="32.185688" y="17.42931" />
+					<text xml:space="preserve" style="
+								font-size: 10.9979px;
+								fill: #bfbfbf;
+								fill-opacity: 1;
+								stroke: #000000;
+								stroke-width: 0.916489;
+								stroke-dasharray: none;
+								stroke-opacity: 1;
+							" x="41.573635" y="81.582451" id="text1">
+						<tspan sodipodi:role="line" id="tspan1" style="
+									font-style: normal;
+									font-variant: normal;
+									font-weight: normal;
+									font-stretch: normal;
+									font-family: Arial;
+									-inkscape-font-specification: Arial;
+									fill: #000000;
+									fill-opacity: 1;
+									stroke: none;
+									stroke-width: 0.916489;
+								" x="41.573635" y="81.582451">State 1</tspan>
+					</text>
+				</g>
+				<g id="trans-grp">
+					<path style="
+								fill: #000000;
+								fill-opacity: 1;
+								stroke: #502115;
+								stroke-width: 5.86447;
+								stroke-linecap: round;
+								stroke-linejoin: round;
+								stroke-dasharray: none;
+								stroke-opacity: 1;
+								marker-end: url(#ConcaveTriangle);
+							" d="M 8.0252444,116.25594 H 285.64686" id="path2" />
+					<circle style="
+								fill: #502115;
+								fill-opacity: 1;
+								stroke: none;
+								stroke-width: 5.86447;
+								stroke-linecap: round;
+								stroke-linejoin: round;
+								stroke-dasharray: none;
+								stroke-opacity: 1;
+							" id="path3" cx="163.84297" cy="116.25594" r="17.22089" />
+					<image width="25.697796" height="25.697796" preserveAspectRatio="none"
+						xlink:href="img/condition_click.png" id="image1-4" x="150.99408" y="103.40704" />
+				</g>
+			</defs>
+		</svg>
+	</div>
+
+	<script>
+		var svg = d3.select("#diagram-container");
+
+		var state = svg
+			.append("use")
+			.attr("href", "#state-grp")
+			.attr("x", 50)
+			.attr("y", 50)
+			.attr("fill", "none");
+
+		var trans = svg
+			.append("use")
+			.attr("href", "#trans-grp")
+			.attr("x", 50)
+			.attr("y", 50)
+			.attr("fill", "none");
+
+		initDiagram(new Array(state), new Array(trans));
+
+		dragState(d3)(state);
+		dragTrans(d3)(trans);
+	</script>
+</body>
+
+</html>
