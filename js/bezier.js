@@ -11,7 +11,7 @@ export function getParamT(x0, y0, x1, y1, x2, y2, x3, y3, x, y, threshold) {
 export function distanceToCurve(x0_, y0_, x1_, y1_, x2_, y2_, x3_, y3_, x0, y0) {
     var pointList = getDivPointList(x0_, y0_, x1_, y1_, x2_, y2_, x3_, y3_, 12);
     // console.log(x0 + ", " + y0);
-    // console.log(pointList);
+    console.log(pointList);
     var rf = new RectF();
     var minDistance = 10000000;
     var minIndex = 0;
@@ -50,6 +50,8 @@ export function distanceToCurve(x0_, y0_, x1_, y1_, x2_, y2_, x3_, y3_, x0, y0) 
     }
     var pointA = pointList[minIndex];
     var pointB = pointList[minIndex + 1];
+    console.log(pointA);
+    console.log(pointB);
     var tA = 1 / (pointList.length - 1) * minIndex;
     var tB = 1 / (pointList.length - 1) * (minIndex + 1);
     var t = tA + (tB - tA) * getDistance(pointA.x, pointA.y, xq, yq) /
