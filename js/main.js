@@ -1,6 +1,6 @@
 // import { distanceToCurve } from "./bezier.js";
 
-const D_PROP_REGEX = /M\s+([\d\.]+),([\d\.]+)\s+C\s+([\d\.]+),([\d\.]+)\s+([\d\.]+),([\d\.]+)\s+([\d\.]+),([\d\.]+)/g;
+const D_PROP_REGEX = /M\s+([\-\d\.]+),([\-\d\.]+)\s+C\s+([\-\d\.]+),([\-\d\.]+)\s+([\-\d\.]+),([\-\d\.]+)\s+([\-\d\.]+),([\-\d\.]+)/g;
 
 function initDiagram(states, transes, d3) {
     // const str = "M 8.0252444,116.25594 C 120.28787,77.534661 204.037,150.4061 285.64686,116.25594";
@@ -113,6 +113,8 @@ function dragTrans(d3) {
             dx = current.attr("x") - d3.event.x;
             dy = current.attr("y") - d3.event.y;
 
+            // console.log((d3.event.x - current.attr("x")) + ", " + (d3.event.y - current.attr("y")));
+
             var curve = d3.select("#trans-path");
             var ponits = dProp2Points(curve.attr("d"));
             var dist = distanceToCurve(
@@ -127,9 +129,6 @@ function dragTrans(d3) {
                 d3.event.x - current.attr("x"),
                 d3.event.y - current.attr("y")
             );
-            console.log(curve.attr("d"));
-            console.log(d3.event.x + ", " + d3.event.y);
-            console.log(current.attr("x") + ", " + current.attr("y"));
             console.log(dist);
         })
         .on("drag", function() {
